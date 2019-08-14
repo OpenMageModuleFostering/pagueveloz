@@ -3,7 +3,7 @@
     "type": "magento-module",
     "license": "Open-Software-License-(OSL)",
     "homepage": "",
-    "description": " PagueVeloz is a payment gateway, already prepared to generate and recognize brazilian payment method boleto. ",
+    "description": "PagueVeloz is a payment gateway, already prepared to generate and recognize brazilian payment method boleto.",
     "authors": [
     {
         "name": "Trezo",
