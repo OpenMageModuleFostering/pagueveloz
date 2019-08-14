@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <pagueveloz translate="title" module="pagueveloz_sms">
+            <children>
+                <configuration>
+                    <title>Configuration</title>
+                    <sort_order>100</sort_order>
+                    <action>adminhtml/system_config/edit/section/pagueveloz</action>
+                </configuration>
+            </children>
+        </pagueveloz>
+    </menu>
+</config>

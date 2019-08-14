@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category    PagueVeloz
+ * @package     PagueVeloz_Boleto
+ * @author André Felipe <andrew.daluz@gmail.com>
+ * @copyright   Copyright (c) 2013 André Felipe Teixeira da Luz <andrew.daluz@gmail.com>
+ */
+-->
+<config>
+    <modules>
+        <PagueVeloz_Api>
+            <active>true</active>
+            <codePool>community</codePool>
+        </PagueVeloz_Api>
+        <PagueVeloz_Boleto>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Payment />
+            </depends>
+        </PagueVeloz_Boleto>
+        <PagueVeloz_Cliente>
+            <active>true</active>
+            <codePool>community</codePool>
+        </PagueVeloz_Cliente>
+        <PagueVeloz_Sms>
+            <active>true</active>
+            <codePool>community</codePool>
+        </PagueVeloz_Sms>
+    </modules>
+</config>

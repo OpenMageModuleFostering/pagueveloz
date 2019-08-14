@@ -1,0 +1,212 @@
+<script type="text/javascript">
+//<![CDATA[
+    Event.observe(window, 'load', recalculateTax);
+    Event.observe(window, 'load', registerTaxRecalcs);
+
+    function registerTaxRecalcs()
+    {
+        if (typeof dynamicTaxes == 'undefined') {
+            return;
+        }
+
+        for (var i = 0; i < dynamicTaxes.length; i++) {
+            Event.observe($(dynamicTaxes[i]), 'change', recalculateTax);
+        }
+        Event.observe($('tax_class_id'), 'change', recalculateTax);
+    }
+
+    var priceFormat = <?php echo $this->helper('tax')->getPriceFormat($this->getStore()); ?>;
+    var taxRates = <?php echo $this->helper('tax')->getAllRatesByProductClass($this->getStore()); ?>;
+
+    function recalculateTax()
+    {
+        if (typeof dynamicTaxes == 'undefined') {
+            return;
+        }
+
+        for (var i = 0; i < dynamicTaxes.length; i++) {
+            var code = dynamicTaxes[i];
+            var span = $('dynamic-tax-' + code);
+            var input = $(code);
+
+            if (!input.value) {
+                span.innerHTML = '';
+                continue;
+            }
+
+            var rate = 0;
+            var taxClass = $('tax_class_id').options[$('tax_class_id').selectedIndex].value;
+            eval('var value = taxRates.value_' + taxClass);
+
+            if (value != undefined) {
+                rate = value;
+            }
+
+            var spanValue = '';
+            if (rate != 0) {
+                spanValue = ' ' + formatCurrency(input.value / (100 + rate) * rate, priceFormat);
+            }
+            span.innerHTML = spanValue;
+        }
+    }
+
+// Bind tab changes
+    function bindActiveProductTab(event) {
+        if (event.tab && event.tab.name && $('store_switcher')) {
+            $('store_switcher').switchParams = 'active_tab/' + event.tab.name + '/';
+        }
+    }
+    varienGlobalEvents.attachEventHandler('showTab', bindActiveProductTab);
+
+// bind active tab
+<?php if ($tabsBlock = $this->getLayout()->getBlock('product_tabs')): ?>
+        if (<?php echo $tabsBlock->getJsObjectName() ?> && <?php echo $tabsBlock->getJsObjectName() ?>.activeTab && $('store_switcher')) {
+            $('store_switcher').switchParams = 'active_tab/' +<?php echo $tabsBlock->getJsObjectName() ?>.activeTab.name + '/';
+        }
+<?php endif; ?>
+//]]>
+</script>
+
+
+
+
+<script type="text/javascript">
+    smsComprar = {
+        div_boleto: 'boleto_compra_sms',
+        totalSelected: 0,
+        produtosAdded: {},
+        comprarPacote: function(payment_type, buy_type, value) {
+            smsComprar.div_boleto = 'boleto_compra_sms';
+            smsComprar.comprar(payment_type, buy_type, value);
+        },
+        comprarAvulso: function(payment_type, buy_type, value) {
+            smsComprar.div_boleto = 'boleto_compra_sms_avulso';
+            smsComprar.comprar(payment_type, buy_type, value);
+        },
+        comprar: function(payment_type, buy_type, value) {
+            new Ajax.Request('<?php echo Mage::getUrl('adminhtml/sms/comprar') ?>', {
+                method: 'post',
+                parameters: {
+                    payment_type: payment_type,
+                    buy_type: buy_type,
+                    value: value
+                },
+                onSuccess: function(response) {
+                    var dados = response.responseText.evalJSON();
+                    $(smsComprar.div_boleto).innerHTML = '<div style="margin: 10px;">Imprimir boleto: <a style="background-color: #fb913e; border: 1px solid #ee5f02; color: white; font-weight: bold; padding: 5px;  text-decoration: none;" target="_blank" href="' + dados.urlBoleto + '">clique aqui</a></div>';
+                },
+                onFailure: function() {
+                    alert('Não foi possível completar a operação, tente novamente...');
+                }
+            });
+        }
+    };
+
+    smsTemplate = {
+        form: 'form_templates',
+        table: 'sms_template_container',
+        addNew: function() {
+            $(smsTemplate.table).innerHTML = $(smsTemplate.table).innerHTML
+                    + '<tr class="even pointer">'
+                        + '<td class="a-center">##</td>'
+                        + '<td class="a-center">Pringles</td>'
+                        + '<td class="">Pringles</td>'
+                    + '</tr>\n';
+        },
+        send: function() {
+            $(smsTemplate.form).request({
+                method: 'post',
+                onComplete: function(response){
+                    var dados = response.responseText.evalJSON();
+                    alert('Informaçoes salvas com sucesso');
+                }
+            });
+        }
+    };
+
+    sms = {
+        tableContainer: 'sms_container',
+        totalSelected: 0,
+        smsLoaded: {},
+        loadSms: function(dados) {
+            $('total_sms').innerHTML = dados.total_sms;
+            $('total_pages').innerHTML = dados.total_pages;
+
+            var smsListHtml = "";
+
+            for (var sms in dados.smsList) {
+                if (dados.smsList.hasOwnProperty(sms)) {
+                    smsListHtml += "<tr class='even pointer'><td class='a-center'><input onchange='sms.observeCheck(this)' id='" + dados.smsList[sms].order_id + "' value='" + dados.smsList[sms].order_id + "' class='checkbox' name='productID[" + dados.smsList[sms].order_id + "]' type='checkbox' />";
+                    smsListHtml += "</td><td class=' '>" + dados.smsList[sms].order_id + "</td><td class=' '>" + dados.smsList[sms].status + "</td><td class=' '>" + dados.smsList[sms].message + "</td><td class=' '>" + dados.smsList[sms].created_at + "</td></tr>";
+                }
+            }
+            $('sms_container').innerHTML = smsListHtml;
+            sms.smsLoaded = dados.smsList;
+        },
+        formLoad: function(pageNumber) {
+            new Ajax.Request('<?php echo Mage::getUrl('adminhtml/sms/smsList') ?>', {
+                method: 'post',
+                parameters: {
+                    page: pageNumber,
+                    limit: $('limit').value,
+                    name: $('name_filter').value,
+                    sku: $('sku_filter').value,
+                    price_to: $('priceTo_filter').value,
+                    price_from: $('priceFrom_filter').value,
+                },
+                onSuccess: function(response) {
+                    $('page').value = pageNumber;
+                    var dados = response.responseText.evalJSON();
+                    sms.loadSms(dados);
+                },
+                onFailure: function() {
+                    alert('Something went wrong...');
+                }
+            });
+        },
+        previousPage: function() {
+            var previous_page = parseInt($('page').value) - 1;
+            sms.formLoad(previous_page);
+        },
+        nextPage: function() {
+            var next_page = parseInt($('page').value) + 1;
+            sms.formLoad(next_page);
+        },
+        selectAll: function() {
+            $$('#sms_container input[type=checkbox]').each(function(check) {
+                check.checked = true;
+                sms.totalSelected++;
+            });
+            $('smsSelected-count').innerHTML = sms.totalSelected;
+        },
+        unselectAll: function() {
+            $$('#sms_container input[type=checkbox]').each(function(check) {
+                check.checked = false;
+                sms.totalSelected--;
+            });
+            $('smsSelected-count').innerHTML = sms.totalSelected;
+        },
+        doFilter: function() {
+            alert('@TODO');
+        },
+        resetFilter: function() {
+            alert('@TODO');
+        },
+        observeCheck: function(element) {
+            if (!element.checked) {
+                return;
+            }
+        },
+        addSelectedSms: function() {
+            $$('#sms_container input[type=checkbox]').each(function(check) {
+                if (check.checked) {
+                    id = check.value;
+                    smsGerar.addSms(id);
+                }
+            });
+
+        }
+    };
+
+    sms.formLoad(1);
+</script>

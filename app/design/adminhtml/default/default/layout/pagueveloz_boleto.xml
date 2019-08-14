@@ -1,0 +1,42 @@
+<layout>    
+    <default>
+        <reference name="js">
+            <!-- Utilizado na configuracao do modulo para assinar pagueveloz -->
+            <block type="core/template" template="pagueveloz/js.phtml" name="pagueveloz_js"></block>
+        </reference>
+        <reference name="head">
+            <action method="addJs">
+                <script>prototype/window.js</script>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/alphacube.css</name>
+            </action>
+        </reference>
+    </default>
+    <adminhtml_sales_order_view> 
+        <reference name="sales_order_tabs">
+            <action method="addTab">
+                <name>pagueveloz_boleto</name>
+                <block>pagueveloz_boleto/adminhtml_sales_order_view_tab_boleto</block>
+            </action>
+        </reference>
+    </adminhtml_sales_order_view>
+    <adminhtml_boleto_index>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>pagueveloz/boleto</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="pagueveloz_boleto/adminhtml_content" name="pagueveloz_boleto_content" template="pagueveloz_boleto/content.phtml"></block>
+        </reference>
+        <reference name="js">
+            <block type="pagueveloz_boleto/adminhtml_js" template="pagueveloz_boleto/js.phtml" name="pagueveloz_boleto_js"></block>
+        </reference>
+    </adminhtml_boleto_index>
+</layout>

@@ -1,0 +1,361 @@
+<div id="page:main-container">
+    <div id="messages">
+    </div>
+    <div style="">
+        <div style="margin-left: 50%; position: absolute; width: 47%;">
+            <div class="content-header">
+                <table cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td style="width:50%;">
+                                <h3 style="width: 98%;" class="">Planos e preços  <div style="float: right">Saldo: <span style=""><?php echo $this->getSaldo() //Mage::helper('core')->currency($price, true, false);  ?> Crédito</span></div></h3>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <?php
+                $pacotesSms = $this->getPacotesSms();
+                if (!empty($pacotesSms)) : ?>
+                    <div id="productGrid">
+                        <div class="grid">
+                            <div class="hor-scroll">
+                                <table cellspacing="0" id="productGrid_table" class="data">
+                                    <colgroup>
+                                        <col width="250">
+                                        <col width="100">
+                                        <col width="150">
+                                        <col width="250" class="a-center">
+                                        <col width="100" class="a-center">
+                                    </colgroup>
+                                    <thead>
+                                        <tr class="headings">
+                                            <th>
+                                                <span class="nobr"><span class="sort-title">Plano</span></span>
+                                            </th>
+                                            <th>
+                                                <span class="nobr"><span class="sort-title">Apartir de</span></span>
+                                            </th>
+                                            <th>
+                                                <span class="nobr"><span class="sort-title">Valor</span></span>
+                                            </th>
+                                            <th>
+                                                <span class="nobr"><span class="sort-title">Valor Total Pacote</span></span>
+                                            </th>
+                                            <th>
+                                                <span class="nobr"><span class="sort-title"></span></span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="sms_gerar_container">
+                                        <?php
+                                        foreach ($pacotesSms as $pacote):
+                                        ?>
+                                            <tr class='even pointer'>
+                                                <td><?php echo $pacote->Nome ?></td>
+                                                <td><?php echo $pacote->QuantidadeDeCreditos ?> SMS</td>
+                                                <td class='a-center'><?php echo Mage::helper('core')->currency($pacote->ValorDoCredito, true, false) ?> por SMS</td>
+                                                <td class='a-center'>
+                                                    <?php echo $pacote->QuantidadeDeCreditos ?> SMS por <?php echo Mage::helper('core')->currency($pacote->ValorDoPacote, true, false) ?>
+                                                </td>
+                                                <td class='a-center'>
+                                                    <button id="" title="Comprar" type="button" class="scalable add" onclick="smsComprar.comprarPacote(
+                                                                    0,
+                                                                    0,
+                                                                    <?php echo $pacote->QuantidadeDeCreditos ?>
+                                                                )" style="">
+                                                        <span><span><span>Comprar</span></span></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                <?php
+                endif;
+                ?>
+            </div>
+            <div id="boleto_compra_sms"></div>
+            <div class="content-header">
+                <table cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td style="width:50%;">
+                                <h3 class="">Compra de créditos Avulso</h3>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="productGrid">
+                <div class="grid">
+                    <div class="hor-scroll">
+                        <table cellspacing="0" id="productGrid_table" class="data">
+                            <colgroup>
+                                <col width="250">
+                                <col width="100">
+                                <col width="150">
+                                <col width="250" class="a-center">
+                            </colgroup>
+                            <thead>
+                                <tr class="headings">
+                                    <th>
+                                        <span class="nobr"><span class="sort-title">Pagar com</span></span>
+                                    </th>
+                                    <th>
+                                        <span class="nobr"><span class="sort-title">Selecione</span></span>
+                                    </th>
+                                    <th>
+                                        <span class="nobr"><span class="sort-title">Qtd/Valor</span></span>
+                                    </th>
+                                    <th>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="sms_gerar_container">
+                                <tr class='even pointer'>
+                                    <td>
+                                        <select id="payment_type" name="payment_type">
+                                            <option value="<?php echo PagueVeloz_Api_Model_Webservice_ComprarCreditosSMS::PAGAMENTO_POR_BOLETO ?>">Boleto</option>
+                                            <option value="<?php echo PagueVeloz_Api_Model_Webservice_ComprarCreditosSMS::PAGAMENTO_POR_DEPOSITO ?>">Depósito</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="buy_type" name="buy_type">
+                                            <option value="<?php echo PagueVeloz_Api_Model_Webservice_ComprarCreditosSMS::COMPRA_POR_CREDITO ?>">Créditos (SMS)</option>
+                                            <option value="<?php echo PagueVeloz_Api_Model_Webservice_ComprarCreditosSMS::COMPRA_POR_VALOR ?>">Valor (R$)</option>
+                                        </select>
+                                    </td>
+                                    <td class='a-center'>
+                                        <input id="buy_sms_value" name="buy_sms_value" />
+                                    </td>
+                                    <td class='a-center'>
+                                        <button id="" title="Comprar" type="button" class="scalable add" onclick="smsComprar.comprarAvulso(
+                                                        $('payment_type').value,
+                                                        $('buy_type').value,
+                                                        $('buy_sms_value').value
+                                                    )" style="">
+                                            <span><span><span>Comprar</span></span></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="boleto_compra_sms_avulso"></div>
+        </div>
+        <div style="position: unset; width: 49%;">
+            <div class="content-header">
+                <table cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td style="width:50%;">
+                                <h3 style="width: 98%;" class="">Templates SMS</h3>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="productGrid">
+                <form id="form_templates" action="<?php echo Mage::getUrl('adminhtml/sms/saveTemplates') ?>" method="POST">
+                    <div class="grid">
+                        <div class="hor-scroll">
+                            <table cellspacing="0" id="productGrid_table" class="data">
+                                <colgroup>
+                                    <col width="20" class="a-center">
+                                    <col width="150">
+                                    <col width="500">
+                                </colgroup>
+                                <thead>
+                                    <tr class="headings">
+                                        <th>
+                                            <span class="nobr"><span class="sort-title">Ativo</span></span>
+                                        </th>
+                                        <th>
+                                            <span class="nobr"><span class="sort-title">Enviar SMS para Status</span></span>
+                                        </th>
+                                        <th>
+                                            <span class="nobr"><span class="sort-title">Mensagem</span></span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sms_template_container">
+                                    <?php
+                                    $statuses = $this->getStatuses();
+                                    foreach ($statuses as $status): ?>
+                                    <?php $template = $this->getTemplateByStatus($status->getStatus()); ?>
+                                    <tr class='even pointer'>
+                                        <td class='a-center'>
+                                            <select name="templates[<?php echo $status->getStatus(); ?>][enabled]">
+                                                <option value="0" <?php if(!$template->getEnabled()): ?>selected<?php endif; ?> >Não</option>
+                                                <option value="1" <?php if($template->getEnabled()): ?>selected<?php endif; ?>>Sim</option>
+                                            </select>
+                                        </td>
+                                        <td class=''><?php echo $status->getLabel() ?></td>
+                                        <td class=''>
+                                            <textarea style="height: 15px" name="templates[<?php echo $status->getStatus(); ?>][template]"><?php echo $template->getTemplate() ?></textarea>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <table cellspacing="0" class="hor-scroll">
+                        <tbody>
+                            <tr>
+                                <td class="a-right" style="padding: 10px !important">
+                                    <button id="id_5a1bd68f1d36ca85b36800d2b570033b" title="Salvar Templates" type="button" class="scalable add" onclick="smsTemplate.send()" style="">
+                                        <span><span><span>Salvar Templates SMS</span></span></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="content-header">
+                <table cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td style="width:50%;">
+                                <h3 style="width: 98%;" class="">Envios de SMS</h3>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="productGrid">
+                <table cellspacing="0" class="actions">
+                    <tbody>
+                        <tr>
+                            <td class="pager">Página<img class="arrow" alt="Go to Previous page" src="<?php echo $this->getSkinUrl('images/pager_arrow_left_off.gif') ?>">
+                                <form action="sms.formLoad($('page').value)">
+                                    <input type="text"  class="input-text page" id="page" value="1">
+                                </form>
+                                <img class="arrow" alt="Go to Previous page" src="<?php echo $this->getSkinUrl('images/pager_arrow_right_off.gif') ?>">
+                                de <span id='total_pages'>0</span> páginas<span class="separator">|</span>
+                                Ver
+                                <select onchange="javascript:sms.formLoad($('page').value)" name="limit" id='limit'>
+                                    <option selected="selected" value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="200">200</option>
+                                </select>
+                                por página<span class="separator">|</span>
+                                Total de <span id='total_sms'>0</span> registros encontrados
+                            </td>
+                            <td class="filter-actions a-right">
+                                <button style="" onclick="sms.resetFilter()" class="scalable " type="button" title="Reiniciar Filtro" id="id_1615dbc01a31f3c21ca83893f7519628">
+                                    <span>
+                                        <span>
+                                            <span>Reiniciar Filtro</span>
+                                        </span>
+                                    </span>
+                                </button>
+                                <button style="" onclick="sms.doFilter()" class="scalable task" type="button" title="Pesquisa" id="id_901291ee967136c40f7caf2c00aefb06">
+                                    <span>
+                                        <span>
+                                            <span>Pesquisa</span>
+                                        </span>
+                                    </span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="productGrid_massaction">
+                    <table cellspacing="0" cellpadding="0" class="massaction">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a onclick="return sms.selectAll()" href="#">Selecionar Tudo</a>
+                                    <span class="separator">|</span>
+                                    <a onclick="return sms.unselectAll()" href="#">Desselecionar Todos</a>
+                                    <span class="separator">|</span>
+                                    <strong id="smsSelected-count">0</strong> itens selecionados
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="grid">
+                    <div class="hor-scroll">
+                        <table cellspacing="0" id="productGrid_table" class="data">
+                            <colgroup>
+                                <col width="20" class="a-center">
+                                <col width="50">
+                                <col width="500">
+                                <col width="200">
+                                <col width="50">
+                            </colgroup>
+                            <thead>
+                                <tr class="headings">
+                                    <th>
+                                        <span class="nobr">&nbsp;</span>
+                                    </th>
+                                    <th>
+                                        <span class="nobr"><span class="sort-title">Pedido</span></span>
+                                    </th>
+                                    <th>
+                                        <span class="nobr"><a class="not-sort" title="asc" name="name" href="#"><span class="sort-title">Status</span></a></span>
+                                    </th>
+                                    <th>
+                                        <span class="nobr"><a class="not-sort" title="asc" name="price" href="#"><span class="sort-title">Mensagem</span></a></span>
+                                    </th>
+                                    <th>
+                                        <span class="nobr"><a class="not-sort" title="asc" name="price" href="#"><span class="sort-title">Criado em</span></a></span>
+                                    </th>
+                                </tr>
+                                <tr class="filter">
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                        <div class="field-100">
+                                            <form action="javascript:sms.formLoad($('page').value)">
+                                                <input type="text" class="input-text no-changes" value="" id="name_filter" name="name_filter">
+                                            </form>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="field-100">
+                                            <form action="javascript:sms.formLoad($('page').value)">
+                                                <input type="text" class="input-text no-changes" value="" id="sku_filter" name="sku_filter">
+                                            </form>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="range">
+                                            <form action="javascript:sms.formLoad($('page').value)">
+                                                <div class="range-line">
+                                                    <span class="label">De:</span>
+                                                    <input type="text" class="input-text no-changes" value="" id="priceFrom_filter" name="price[from]">
+                                                </div>
+                                                <div class="range-line">
+                                                    <span class="label">Para : </span>
+                                                    <input type="text" class="input-text no-changes" value="" id="priceTo_filter" name="price[to]">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="sms_container">
+                                <!-- All sms rows are added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

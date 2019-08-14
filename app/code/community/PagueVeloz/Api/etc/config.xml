@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <PagueVeloz_Api>
+            <version>1.0.0</version>
+        </PagueVeloz_Api>
+    </modules>
+    <global>
+        <helpers>
+            <pagueveloz_api>
+                <class>PagueVeloz_Api_Helper</class>
+            </pagueveloz_api>
+        </helpers>
+        <models>
+            <pagueveloz_api>
+                <class>PagueVeloz_Api_Model</class>
+            </pagueveloz_api>
+        </models>
+        <events>
+            <admin_system_config_changed_section_pagueveloz>
+                <observers>
+                    <pagueveloz_api>
+                        <type>singleton</type>
+                        <class>pagueveloz_api/observer</class>
+                        <method>savePaguevelozConfig</method>
+                    </pagueveloz_api>
+                </observers>
+            </admin_system_config_changed_section_pagueveloz>
+        </events>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <PagueVeloz_Api before="Mage_Adminhtml">PagueVeloz_Api_Adminhtml</PagueVeloz_Api>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <pagueveloz_api>
+                    <file>pagueveloz_api.xml</file>
+                </pagueveloz_api>
+            </updates>
+        </layout>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <pagueveloz>
+                                            <title>PagueVeloz - All</title>
+                                        </pagueveloz>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+</config>

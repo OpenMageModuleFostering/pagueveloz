@@ -1,0 +1,45 @@
+<?php
+/**
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * @see Mage_Payment_Block_Info
+ */
+?>
+<p><?php echo $this->escapeHtml($this->getMethod()->getTitle()) ?></p>
+<?php if ($this->getInstructions()): ?>
+<table>
+    <tbody>
+        <tr>
+            <td><?php echo nl2br($this->getInstructions()) ?></td>
+        </tr>
+    </tbody>
+</table>
+<?php endif; ?>
+
+<?php
+$order = $this->getInfo()->getOrder();
+
+if ($order) {
+	try
+	{
+		$boleto = Mage::getModel('pagueveloz_boleto/boleto')->generate($order);
+
+        if ($boleto->getId()) {
+            echo "<a href=\"{$boleto->getUrl()}\" target=\"_blank\">Imprimir Boleto</a>";
+        }
+        else {
+            echo "<b>Não foi possível gerar o Boleto<br>"
+            . "Favor contate o administrador do site</b>";
+        }
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+}
+?>

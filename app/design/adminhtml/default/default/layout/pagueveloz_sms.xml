@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>    
+    <adminhtml_sms_index> 
+        <reference name="menu">
+            <action method="setActive"><menupath>pagueveloz/sms</menupath></action>
+        </reference>
+        <reference name="content">
+            <block type="pagueveloz_sms/adminhtml_content" name="pagueveloz_sms_content" template="pagueveloz_sms/content.phtml"></block>
+        </reference>
+        <reference name="js">
+            <block type="pagueveloz_sms/adminhtml_js" template="pagueveloz_sms/js.phtml" name="pagueveloz_sms_js"></block>
+        </reference>
+    </adminhtml_sms_index> 
+</layout>

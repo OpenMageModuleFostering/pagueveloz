@@ -1,0 +1,221 @@
+<div id="page:main-container">
+    <div id="messages">
+    </div>
+    <div class="content-header">
+        <table cellspacing="0">
+            <tbody>
+            <tr>
+                <td style="width:50%;">
+                    <h3 class="">Contas</h3>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="" style="">
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-edit-form fieldset-legend">Agendar contas a pagar</h4>
+            </div>
+            <div id="group_fields7" class="fieldset fieldset-wide">
+                <div class="hor-scroll">
+                    <form action="<?php echo Mage::helper("adminhtml")->getUrl('adminhtml/conta/cadastrar') ?>" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="form_key" value="<?php echo $this->getFormKey(); ?>" />
+                        <table cellspacing="0" class="form-list">
+                            <tbody>
+                                <tr>
+                                    <td class="label"><label for="name">Boleto <span class="required">*</span></label></td>
+                                    <td class="value">
+                                        <input type="file" class="required-entry input-text required-entry" name="titulo_arquivo" id="titulo_arquivo">
+                                    </td>
+                                    <td class="scope-label"><span class="nobr"></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="label"><label for="name">Vencimento </label></td>
+                                    <td class="value">
+                                        <input style="width:110px !important;" type="text" class="required-entry input-text required-entry" value="" name="vencimento" id="vencimento"><img id="vencimento_button" class="arrow" alt="Go to Previous page" src="<?php echo $this->getSkinUrl('images/grid-cal.gif') ?>">
+                                    </td>
+                                    <td class="scope-label"><span class="nobr"></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="label"><label for="name">Valor </label></td>
+                                    <td class="value">
+                                        <input  style="width:110px !important;" type="text" class=" required-entry input-text required-entry" value="" name="valor" id="valor">
+                                    </td>
+                                    <td class="scope-label"><span class="nobr"></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="label"><label for="name">Código de Barras </label></td>
+                                    <td class="value">
+                                        <input type="text" class=" required-entry input-text required-entry" value="" name="codigo_de_barras" id="codigo_de_barras">
+                                    </td>
+                                    <td class="scope-label"><span class="nobr"></span></td>
+                                </tr>
+                                <tr>
+                                    <td style="" class="a-right">
+                                        <button style="" class="scalable add" type="submit" title="Cadastrar Conta" id="id_testes">
+                                            <span><span><span>Cadastrar Conta</span></span></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+    /*
+    <div class="content-header">
+        <table cellspacing="0">
+            <tbody>
+            <tr>
+                <td style="width:50%;">
+                    <h3 class="">Boletos</h3>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <div id="productGrid">
+            <table cellspacing="0" class="actions">
+                <tbody>
+                <tr>
+                    <td class="pager">Página<img class="arrow" alt="Go to Previous page" src="<?php echo $this->getSkinUrl('images/pager_arrow_left_off.gif') ?>">
+                        <form action="ebook.formLoad($('page').value)">
+                            <input type="text"  class="input-text page" id="page" value="1">
+                        </form>
+                        <img class="arrow" alt="Go to Previous page" src="<?php echo $this->getSkinUrl('images/pager_arrow_right_off.gif') ?>">
+                        de <span id='total_pages'>0</span> páginas<span class="separator">|</span>
+                        Ver
+                        <select onchange="javascript:ebook.formLoad($('page').value)" name="limit" id='limit'>
+                            <option selected="selected" value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                        </select>
+                        por página<span class="separator">|</span>
+                        Total de <span id='total_produtos'>0</span> registros encontrados
+                    </td>
+                    <td class="filter-actions a-right">
+                        <button style="" onclick="ebook.resetFilter()" class="scalable " type="button" title="Reiniciar Filtro" id="id_1615dbc01a31f3c21ca83893f7519628">
+            				<span>
+            					<span>
+            						<span>Reiniciar Filtro</span>
+            					</span>
+            				</span>
+                        </button>
+                        <button style="" onclick="ebook.doFilter()" class="scalable task" type="button" title="Pesquisa" id="id_901291ee967136c40f7caf2c00aefb06">
+            				<span>
+            					<span>
+            						<span>Pesquisa</span>
+            					</span>
+            				</span>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="productGrid_massaction">
+                <table cellspacing="0" cellpadding="0" class="massaction">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <a onclick="return ebook.selectAll()" href="#">Selecionar Tudo</a>
+                            <span class="separator">|</span>
+                            <a onclick="return ebook.unselectAll()" href="#">Desselecionar Todos</a>
+                            <span class="separator">|</span>
+                            <strong id="ebookSelected-count">0</strong> itens selecionados
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="grid">
+                <div class="hor-scroll">
+                    <table cellspacing="0" id="productGrid_table" class="data">
+                        <colgroup>
+                            <col width="20" class="a-center">
+                            <col width="50">
+                            <col width="500">
+                            <col width="200">
+                            <col width="50">
+                        </colgroup>
+                        <thead>
+                        <tr class="headings">
+                            <th>
+                                <span class="nobr">&nbsp;</span>
+                            </th>
+                            <th>
+                                <span class="nobr"><span class="sort-title">Imagem</span></span>
+                            </th>
+                            <th>
+                                <span class="nobr"><a class="not-sort" title="asc" name="name" href="#"><span class="sort-title">Nome</span></a></span>
+                            </th>
+                            <th>
+                                <span class="nobr"><a class="not-sort" title="asc" name="price" href="#"><span class="sort-title">SKU</span></a></span>
+                            </th>
+                            <th>
+                                <span class="nobr"><a class="not-sort" title="asc" name="price" href="#"><span class="sort-title">Preço</span></a></span>
+                            </th>
+                        </tr>
+                        <tr class="filter">
+                            <th>
+                            </th>
+                            <th>
+                            </th>
+                            <th>
+                                <div class="field-100">
+                                    <form action="javascript:ebook.formLoad($('page').value)">
+                                        <input type="text" class="input-text no-changes" value="" id="name_filter" name="name_filter">
+                                    </form>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="field-100">
+                                    <form action="javascript:ebook.formLoad($('page').value)">
+                                        <input type="text" class="input-text no-changes" value="" id="sku_filter" name="sku_filter">
+                                    </form>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="range">
+                                    <form action="javascript:ebook.formLoad($('page').value)">
+                                        <div class="range-line">
+                                            <span class="label">De:</span>
+                                            <input type="text" class="input-text no-changes" value="" id="priceFrom_filter" name="price[from]">
+                                        </div>
+                                        <div class="range-line">
+                                            <span class="label">Para : </span>
+                                            <input type="text" class="input-text no-changes" value="" id="priceTo_filter" name="price[to]">
+                                        </div>
+                                    </form>
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody id="ebook_container">
+                        <!-- All products rows are added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <table cellspacing="0" class="hor-scroll">
+                <tbody>
+                <tr>
+                    <td class="a-right" style="padding: 10px !important">
+                        <button id="id_5a1bd68f1d36ca85b36800d2b570033b" title="Adicionar Produtos" type="button" class="scalable add" onclick="ebook.addSelectedEbooks()" style=""><span><span><span>Adicionar Produtos</span></span></span>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    */
+    ?>
+</div>
+
