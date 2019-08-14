@@ -38,7 +38,6 @@ class PagueVeloz_Api_Model_Webservice_Assinar extends PagueVeloz_Api_Model_Webse
         $json = json_encode($json);
 
         $contexto->setBody($json);
-
         return $this->getMachine()->Send($contexto);
     }
 

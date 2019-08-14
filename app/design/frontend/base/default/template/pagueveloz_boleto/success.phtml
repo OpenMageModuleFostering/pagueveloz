@@ -1,3 +1,4 @@
+<br /><br />
 <?php
 $incrementId = $this->getOrderId();
 
@@ -11,10 +12,13 @@ if ($incrementId) {
             $boleto = Mage::getModel('pagueveloz_boleto/boleto')->generate($order);
 
             if ($boleto->getId()) {
-                echo "<a href=\"{$boleto->getUrl()}\" target=\"_blank\">Imprimir Boleto</a>";
+                echo "<a href=\"{$boleto->getUrl()}\" target=\"_blank\">Imprimir Boleto</a> <br /><br />";
+                if (Mage::getModel('pagueveloz_boleto/boletoMethod')->getConfig('send_email')) {
+                	echo "Você reberá um e-mail com informações do boleto emitido pelo PagueVeloz";
+                }
             }
             else {
-                echo "<b>Não foi possível gerar o Boleto<br>"
+                echo "<b>Não foi possível gerar o Boleto<br />"
                     . "Favor contate o administrador do site</b>";
             }
 		}
@@ -24,3 +28,4 @@ if ($incrementId) {
 	}
 }
 ?>
+<br /><br />

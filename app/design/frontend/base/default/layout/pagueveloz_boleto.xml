@@ -3,7 +3,7 @@
 	<checkout_onepage_success translate="label">
         <reference name="content">
             <reference name="checkout.success">
-            	<block type="pagueveloz/onepage_success" name="pagueveloz_boleto" template="pagueveloz_boleto/success.phtml" />
+            	<block type="pagueveloz_boleto/onepage_success" name="pagueveloz_boleto" template="pagueveloz_boleto/success.phtml" />
             </reference>
         </reference>
     </checkout_onepage_success>

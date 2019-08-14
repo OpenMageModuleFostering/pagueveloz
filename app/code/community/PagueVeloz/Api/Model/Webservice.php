@@ -157,7 +157,7 @@ class PagueVeloz_Api_Model_Webservice extends Mage_Core_Model_Abstract
         $dto->setCpfCnpjSacado($cpf);
         $dto->setParcela(1);
         $dto->setLinha1($boletoMethod->getConfig('instruction1'));
-        $dto->setLinha2($boletoMethod->getConfig('instruction1'));
+        $dto->setLinha2($boletoMethod->getConfig('instruction2'));
         $dto->setCpfCnpjCedente($boletoMethod->getConfig('taxvat'));
         $dto->setCedente($boletoMethod->getConfig('cedente_name'));
         $resposta_final = $boleto->Post($dto);

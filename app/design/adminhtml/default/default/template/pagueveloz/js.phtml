@@ -21,6 +21,7 @@
                 cadastrarWindow +=              '<td class="label"><label for="pagueveloz_pagueveloz_configuration_token">Nome</label></td>';
                 cadastrarWindow +=              '<td class="value">';
                 cadastrarWindow +=                 '<input type="text" class=" input-text" value="" name="name" id="name">';
+                cadastrarWindow +=                  '<p class="note"><span>Sem Acentuação, ex: Joao da Silva</span></p>';
                 cadastrarWindow +=              '</td>';
                 cadastrarWindow +=          "</tr>";
                 cadastrarWindow +=          '<tr id="row_pagueveloz_pagueveloz_configuration_token">';
@@ -62,7 +63,16 @@
                 cadastrarWindow +=          '<tr id="row_pagueveloz_pagueveloz_configuration_token">';
                 cadastrarWindow +=              '<td class="label"><label for="pagueveloz_pagueveloz_configuration_token">Estado</label></td>';
                 cadastrarWindow +=              '<td class="value">';
-                cadastrarWindow +=                 '<input type="text" class=" input-text" value="" name="state" id="state">';
+                cadastrarWindow +=                 '<select name="state" id="state">';
+                <?php 
+                $estados = new PagueVeloz_Api_Model_Source_States();
+                $estados = $estados->toOptionArray();
+                ?>
+                cadastrarWindow +=                     '<option value="">Selecione...</option>';
+                <?php foreach ($estados as $sigla => $name): ?>
+                cadastrarWindow +=                     '<option value="<?php echo $sigla; ?>"><?php echo $name ?></option>';
+                <?php endforeach; ?>
+                cadastrarWindow +=                 '</select>';
                 cadastrarWindow +=              '</td>';
                 cadastrarWindow +=          "</tr>";
                 cadastrarWindow +=          '<tr id="row_pagueveloz_pagueveloz_configuration_token">';

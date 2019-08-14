@@ -28,6 +28,8 @@ class PagueVeloz_Api_Adminhtml_PaguevelozController extends Mage_Adminhtml_Contr
 
         $config = new Mage_Core_Model_Config();
         $config->saveConfig('pagueveloz/pagueveloz_configuration/production', $isProduction);
+        Mage::app()->getConfig()->reinit(); // Reinicia as configuracoes do magento do getConfig
+
 
         try {
             $webservice = Mage::getModel('pagueveloz_api/webservice');

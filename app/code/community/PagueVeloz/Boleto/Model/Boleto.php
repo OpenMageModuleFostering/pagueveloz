@@ -44,14 +44,14 @@ class PagueVeloz_Boleto_Model_Boleto extends Mage_Core_Model_Abstract
 
         $_order = Mage::getModel('sales/order')->load($this->getOrderId());
         try {
-            $_boletosData = $boletoMethod->getBoletoPago($_order->getIncrementId());
+            $_boletosData = $boletoMethod->getBoletoPago($this->getSeuNumero());
             if ($_boletosData) {
                 foreach ($_boletosData as $_boleto) {
 
-                    if (($_boleto->SeuNumero == $_order->getIncrementId()) && $_boleto->TemPagamento) {
+                    if (($_boleto->SeuNumero == $this->getSeuNumero()) && $_boleto->TemPagamento) {
                         $_order->setStatus($boletoMethod->getOrderStatus())
                             ->setState($boletoMethod->getOrderStatus())
-                            ->addStatusHistoryComment("BOLETO PAGO EM: {$_boleto->DataPagamento} | {$_boleto->ValorPago} R$")
+                            ->addStatusHistoryComment("BOLETO PAGO EM: {$_boleto->DataPagamento} | R$ {$_boleto->ValorPago}")
                             ->save();
 
                         $this->setStatus('pago')
@@ -61,7 +61,7 @@ class PagueVeloz_Boleto_Model_Boleto extends Mage_Core_Model_Abstract
 
                         $_boleto->Status = 'pago';
 
-                        $boletoMethod->log("[{$_order->getIncrementId()}] Boleto Pago | ID: " . $_boleto->Id . " | URL: " . $_boleto->Url);
+                        $boletoMethod->log("[{$this->getSeuNumero()}] Boleto Pago | ID: " . $_boleto->Id . " | URL: " . $_boleto->Url);
                         return $_boleto;
                     }
                 }
@@ -73,10 +73,11 @@ class PagueVeloz_Boleto_Model_Boleto extends Mage_Core_Model_Abstract
 
     public function generate($order)
     {
+        $customer = Mage::getModel("customer/customer")->load($order->getCustomerId());
         $valor = $order->getGrandTotal();
         $seuNumero = $order->getIncrementId();
         $nome = $order->getCustomerName();
-        $cpf = $order->getCustomerTaxvat();
+        $cpf = $customer->getTaxvat();
         $email = $order->getCustomerEmail();
         $boleto = $this->loadByOrderId($order->getId());
         if (!$boleto->getId()) {
@@ -86,6 +87,7 @@ class PagueVeloz_Boleto_Model_Boleto extends Mage_Core_Model_Abstract
                 $this->setUrl($url);
                 $this->setValor($valor);
                 $this->setOrderId($order->getId());
+                $this->setSeuNumero($seuNumero);
                 $this->saveWithConfigData();
             }
 
@@ -97,11 +99,14 @@ class PagueVeloz_Boleto_Model_Boleto extends Mage_Core_Model_Abstract
 
     public function regenerate()
     {
-        $webservice = Mage::getModel('pagueveloz_api/webservice');
+        $this->setQtyRegerado($this->getQtyRegerado()+1);
         $order = $this->getOrder();
-        $seuNumero = $order->getIncrementId();
+        $customer = Mage::getModel("customer/customer")->load($order->getCustomerId());
+        $webservice = Mage::getModel('pagueveloz_api/webservice');
+        $seuNumero = $order->getIncrementId() . "-" . $this->getQtyRegerado();
+        $this->setSeuNumero($seuNumero);
         $nome = $order->getCustomerName();
-        $cpf = $order->getCustomerTaxvat();
+        $cpf = $customer->getTaxvat();
         $email = $order->getCustomerEmail();
 
         $url = $webservice->generateBoletoUrl($this->getValor(), $seuNumero, $nome, $cpf, $email);

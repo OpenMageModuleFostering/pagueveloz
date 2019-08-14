@@ -130,7 +130,12 @@ class PagueVeloz_Api_Model_Dto_BoletoDTO
 
     public function getLinha2()
     {
+        if (Mage::getStoreConfig('payment/pagueveloz_boleto/generate_line_2')) {
+            return " - Ref pedido {$this->getSeuNumero()} efetuado em " . Mage::getStoreConfig('web/unsecure/base_url');
+        }
+
         return $this->_linha2;
+
     }
 
     public function getCpfCnpjCedente()
