@@ -12,6 +12,10 @@ class PagueVeloz_Boleto_Model_BoletoMethod extends Mage_Payment_Model_Method_Ban
 
     public function getInstructions()
     {
+        if (!$this->getConfig('instruction1') && !$this->getConfig('instruction2')) {
+            return '';
+        }
+        
         return $this->getConfig('instruction1') . "<br>" . $this->getConfig('instruction2');
     }
 

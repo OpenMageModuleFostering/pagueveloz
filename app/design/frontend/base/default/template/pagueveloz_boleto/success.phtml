@@ -12,9 +12,12 @@ if ($incrementId) {
             $boleto = Mage::getModel('pagueveloz_boleto/boleto')->generate($order);
 
             if ($boleto->getId()) {
-                echo "<a href=\"{$boleto->getUrl()}\" target=\"_blank\">Imprimir Boleto</a> <br /><br />";
+                echo '<div style=" margin: 0 auto; width: 50%;">';
+                echo "<a href=\"{$boleto->getUrl()}\" target=\"_blank\">";
+                echo "<img src='".$this->getSkinUrl('images/pagueveloz/botao-imprimir-boleto.png') . "' />";
+                echo "</a></div>";
                 if (Mage::getModel('pagueveloz_boleto/boletoMethod')->getConfig('send_email')) {
-                	echo "Você reberá um e-mail com informações do boleto emitido pelo PagueVeloz";
+                	echo "<div style='margin: 0 auto; width: 50%;'>Você reberá um e-mail com informações do boleto emitido pelo PagueVeloz</div>";
                 }
             }
             else {
@@ -28,4 +31,3 @@ if ($incrementId) {
 	}
 }
 ?>
-<br /><br />
