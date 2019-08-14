@@ -19,9 +19,14 @@ class PagueVeloz_Boleto_Model_BoletoMethod extends Mage_Payment_Model_Method_Ban
         return $this->getConfig('instruction1') . "<br>" . $this->getConfig('instruction2');
     }
 
-    public function getOrderStatus()
+    public function getPaidOrderStatus()
     {
-        return Mage::getStoreConfig('payment/pagueveloz_boleto/order_status');
+        return Mage::getStoreConfig('payment/pagueveloz_boleto/order_status_paid');
+    }
+
+    public function getNewOrderStatus()
+    {
+        return Mage::getStoreConfig('payment/pagueveloz_boleto/order_status_new');
     }
 
     public function log($msg)

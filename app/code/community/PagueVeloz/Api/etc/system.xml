@@ -38,9 +38,9 @@
                                             margin-left: 100px;
                                             margin-top: 25px;">OU</div>
                                 Para criar seu token de produção faça o cadastro em 
-                                <a href="https://www.pagueveloz.com.br/Cliente" target="_blank">PagueVeloz</a>.<br />
+                                <a href="https://www.pagueveloz.com.br/" target="_blank">PagueVeloz</a>.<br />
                                 Para criar seu token para testes, em homologação, faça o cadastro em 
-                                <a href="http://pagueveloz.homolog.bludata.net/Cliente" target="_blank">PagueVeloz Homolog</a>.
+                                <a href="http://sandbox.pagueveloz.com.br/" target="_blank">PagueVeloz Homolog</a>.
                                 
                             </div>
                         ]]>

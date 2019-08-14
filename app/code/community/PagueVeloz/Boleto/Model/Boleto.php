@@ -49,9 +49,11 @@ class PagueVeloz_Boleto_Model_Boleto extends Mage_Core_Model_Abstract
                 foreach ($_boletosData as $_boleto) {
 
                     if (($_boleto->SeuNumero == $this->getSeuNumero()) && $_boleto->TemPagamento) {
-                        $_order->setStatus($boletoMethod->getOrderStatus())
-                            ->setState($boletoMethod->getOrderStatus())
-                            ->addStatusHistoryComment("BOLETO PAGO EM: {$_boleto->DataPagamento} | R$ {$_boleto->ValorPago}")
+                        $this->invoiceOrder($_order);
+                        $_order->setStatus($boletoMethod->getPaidOrderStatus())
+                            ->setState($boletoMethod->getPaidOrderStatus())
+                            ->save();
+                        $_order->addStatusHistoryComment("BOLETO PAGO EM: {$_boleto->DataPagamento} | R$ {$_boleto->ValorPago}")
                             ->save();
 
                         $this->setStatus('pago')
@@ -71,13 +73,41 @@ class PagueVeloz_Boleto_Model_Boleto extends Mage_Core_Model_Abstract
         }
     }
 
+    protected function invoiceOrder($order)
+    {
+        try {
+            if(!$order->canInvoice())
+            {
+                Mage::throwException(Mage::helper('core')->__('Cannot create an invoice.'));
+            }
+
+            $invoice = Mage::getModel('sales/service_order', $order)->prepareInvoice();
+
+            if (!$invoice->getTotalQty()) {
+                Mage::throwException(Mage::helper('core')->__('Cannot create an invoice without products.'));
+            }
+
+            $invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_OFFLINE);
+            $invoice->register();
+            $transactionSave = Mage::getModel('core/resource_transaction')
+                ->addObject($invoice)
+                ->addObject($invoice->getOrder());
+
+            $transactionSave->save();
+        }
+        catch (Mage_Core_Exception $e) {
+            $order->addStatusHistoryComment("ERRO AO GERAR FATURA BOLETO: " . $e->getMessage())
+                ->save();
+        }
+    }
+
     public function generate($order)
     {
         $customer = Mage::getModel("customer/customer")->load($order->getCustomerId());
         $valor = $order->getGrandTotal();
         $seuNumero = $order->getIncrementId();
         $nome = $order->getCustomerName();
-        $cpf = $customer->getTaxvat();
+        $cpf = ($order->getCustomerTaxvat()) ? $order->getCustomerTaxvat() : $customer->getTaxvat();
         $email = $order->getCustomerEmail();
         $boleto = $this->loadByOrderId($order->getId());
         if (!$boleto->getId()) {
@@ -106,7 +136,7 @@ class PagueVeloz_Boleto_Model_Boleto extends Mage_Core_Model_Abstract
         $seuNumero = $order->getIncrementId() . "-" . $this->getQtyRegerado();
         $this->setSeuNumero($seuNumero);
         $nome = $order->getCustomerName();
-        $cpf = $customer->getTaxvat();
+        $cpf = ($order->getCustomerTaxvat()) ? $order->getCustomerTaxvat() : $customer->getTaxvat();
         $email = $order->getCustomerEmail();
 
         $url = $webservice->generateBoletoUrl($this->getValor(), $seuNumero, $nome, $cpf, $email);
