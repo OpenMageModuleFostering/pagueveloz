@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <pagueveloz translate="title" module="pagueveloz_boleto">
+            <title>PagueVeloz</title>
+            <sort_order>1000</sort_order>
+            <children>
+                <boleto>
+                    <title>Boleto</title>
+                    <sort_order>1</sort_order>
+                    <action>adminhtml/boleto/index</action>
+                </boleto>
+            </children>
+        </pagueveloz>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <pagueveloz translate="title" module="pagueveloz_boleto">
+                        <title>PagueVeloz Boleto</title>
+                        <sort_order>1</sort_order>
+                        <children>
+                            <all>
+                                <title>All</title>
+                            </all>
+                        </children>
+                    </pagueveloz>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

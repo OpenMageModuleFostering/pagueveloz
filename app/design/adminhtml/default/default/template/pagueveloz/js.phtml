@@ -1,0 +1,144 @@
+<script type="text/javascript">
+    pagueveloz = {
+            cadastrar: function() {
+                win = new Window({className: "alphacube", title: "", width: 510, height: 430, destroyOnClose: true, recenterAuto: false});
+
+                var cadastrarWindow = "<h1>Informe os campos para se cadastrar</h1>";
+                cadastrarWindow += '<table cellspacing="0" class="form-list">';
+                cadastrarWindow +=      '<colgroup class="label"></colgroup>';
+                cadastrarWindow +=      '<colgroup class="value"></colgroup>';
+                cadastrarWindow +=      '<tbody>';
+                cadastrarWindow +=          '<tr id="row_pagueveloz_pagueveloz_configuration_token">';
+                cadastrarWindow +=              '<td class="label"><label for="pagueveloz_pagueveloz_configuration_token">Produção</label></td>';
+                cadastrarWindow +=              '<td class="value">';
+                cadastrarWindow +=                 '<select name="production" id="production">';
+                cadastrarWindow +=                     '<option value="1">Sim</option>';
+                cadastrarWindow +=                     '<option value="0">Não</option>';
+                cadastrarWindow +=                 '</select>';
+                cadastrarWindow +=              '</td>';
+                cadastrarWindow +=          "</tr>";
+                cadastrarWindow +=          '<tr id="row_pagueveloz_pagueveloz_configuration_token">';
+                cadastrarWindow +=              '<td class="label"><label for="pagueveloz_pagueveloz_configuration_token">Nome</label></td>';
+                cadastrarWindow +=              '<td class="value">';
+                cadastrarWindow +=                 '<input type="text" class=" input-text" value="" name="name" id="name">';
+                cadastrarWindow +=              '</td>';
+                cadastrarWindow +=          "</tr>";
+                cadastrarWindow +=          '<tr id="row_pagueveloz_pagueveloz_configuration_token">';
+                cadastrarWindow +=              '<td class="label"><label for="pagueveloz_pagueveloz_configuration_token">Tipo Pessoa</label></td>';
+                cadastrarWindow +=              '<td class="value">';
+                cadastrarWindow +=                 '<select name="type_person" id="type_person">';
+                cadastrarWindow +=                     '<option value="0">Selecione</option>';
+                cadastrarWindow +=                     '<option value="1">Pessoa Física</option>';
+                cadastrarWindow +=                     '<option value="2">Pessoa Jurídica</option>';
+                cadastrarWindow +=                 '</select>';
+                cadastrarWindow +=              '</td>';
+                cadastrarWindow +=          "</tr>";
+                cadastrarWindow +=          '<tr id="row_pagueveloz_pagueveloz_configuration_token">';
+                cadastrarWindow +=              '<td class="label"><label for="pagueveloz_pagueveloz_configuration_token">CPF/CNPJ</label></td>';
+                cadastrarWindow +=              '<td class="value">';
+                cadastrarWindow +=                 '<input type="text" class=" input-text" value="" name="document" id="document">';
+                cadastrarWindow +=              '</td>';
+                cadastrarWindow +=          "</tr>";
+                cadastrarWindow +=          '<tr id="row_pagueveloz_pagueveloz_configuration_token">';
+                cadastrarWindow +=              '<td class="label"><label for="pagueveloz_pagueveloz_configuration_token">Email</label></td>';
+                cadastrarWindow +=              '<td class="value">';
+                cadastrarWindow +=                 '<input type="text" class=" input-text" value="" name="email" id="email">';
+                cadastrarWindow +=                  '<p class="note"><span>Email de notificações</span></p>';
+                cadastrarWindow +=              '</td>';
+                cadastrarWindow +=          "</tr>";
+                cadastrarWindow +=          '<tr id="row_pagueveloz_pagueveloz_configuration_token">';
+                cadastrarWindow +=              '<td class="label"><label for="pagueveloz_pagueveloz_configuration_token">Email de Login</label></td>';
+                cadastrarWindow +=              '<td class="value">';
+                cadastrarWindow +=                 '<input type="text" class=" input-text" value="" name="login_default" id="login_default">';
+                cadastrarWindow +=                  '<p class="note"><span>Email para login no pagueveloz</span></p>';
+                cadastrarWindow +=              '</td>';
+                cadastrarWindow +=          "</tr>";
+                cadastrarWindow +=          '<tr id="row_pagueveloz_pagueveloz_configuration_token">';
+                cadastrarWindow +=              '<td class="label"><label for="pagueveloz_pagueveloz_configuration_token">Cidade</label></td>';
+                cadastrarWindow +=              '<td class="value">';
+                cadastrarWindow +=                 '<input type="text" class=" input-text" value="" name="city" id="city">';
+                cadastrarWindow +=              '</td>';
+                cadastrarWindow +=          "</tr>";
+                cadastrarWindow +=          '<tr id="row_pagueveloz_pagueveloz_configuration_token">';
+                cadastrarWindow +=              '<td class="label"><label for="pagueveloz_pagueveloz_configuration_token">Estado</label></td>';
+                cadastrarWindow +=              '<td class="value">';
+                cadastrarWindow +=                 '<input type="text" class=" input-text" value="" name="state" id="state">';
+                cadastrarWindow +=              '</td>';
+                cadastrarWindow +=          "</tr>";
+                cadastrarWindow +=          '<tr id="row_pagueveloz_pagueveloz_configuration_token">';
+                cadastrarWindow +=              '<td class="label"><label for="pagueveloz_pagueveloz_configuration_token">Rua</label></td>';
+                cadastrarWindow +=              '<td class="value">';
+                cadastrarWindow +=                 '<input type="text" class=" input-text" value="" name="street" id="street">';
+                cadastrarWindow +=              '</td>';
+                cadastrarWindow +=          "</tr>";
+                cadastrarWindow +=          '<tr id="row_pagueveloz_pagueveloz_configuration_token">';
+                cadastrarWindow +=              '<td class="label"><label for="pagueveloz_pagueveloz_configuration_token">Numero</label></td>';
+                cadastrarWindow +=              '<td class="value">';
+                cadastrarWindow +=                 '<input type="text" class=" input-text" value="" name="number" id="number">';
+                cadastrarWindow +=              '</td>';
+                cadastrarWindow +=          "</tr>";
+                cadastrarWindow +=          '<tr id="row_pagueveloz_pagueveloz_configuration_token">';
+                cadastrarWindow +=              '<td class="label"><label for="pagueveloz_pagueveloz_configuration_token">Cep</label></td>';
+                cadastrarWindow +=              '<td class="value">';
+                cadastrarWindow +=                 '<input type="text" class=" input-text" value="" name="cep" id="cep">';
+                cadastrarWindow +=              '</td>';
+                cadastrarWindow +=          "</tr>";
+                cadastrarWindow +=          '<tr id="row_pagueveloz_pagueveloz_configuration_token">';
+                cadastrarWindow +=              '<td class="label"><label for="pagueveloz_pagueveloz_configuration_token"></label></td>';
+                cadastrarWindow +=              '<td class="value">';
+                cadastrarWindow +=                  '<button style="" onclick="pagueveloz.submit()" class="scalable save" type="button" title="Salvar Configuração" id="id_78">';
+                cadastrarWindow +=                      '<span><span><span>Salvar</span></span></span>';
+                cadastrarWindow +=                  '</button>';
+                cadastrarWindow +=              '</td>';
+                cadastrarWindow +=          "</tr>";
+                cadastrarWindow +=      "</tbody>";
+                cadastrarWindow += "</table>";
+
+                win.getContent().update(cadastrarWindow);
+                win.showCenter();
+            },
+            submit: function() {
+                new Ajax.Request('<?php echo Mage::getUrl('adminhtml/pagueveloz/assinar') ?>', {
+                    method: 'post',
+                    parameters: {
+                        isProduction: $('production').value,
+                        Cidade: $('city').value,
+                        Estado: $('state').value,
+                        Logradouro: $('street').value,
+                        Numero: $('number').value,
+                        Nome: $('name').value,
+                        CEP: $('cep').value,
+                        Documento: $('document').value,
+                        TipoPessoa: $('type_person').value,
+                        Email: $('email').value,
+                        LoginUsuarioDefault: $('login_default').value
+                    },
+                    onSuccess: function(response) {
+                        var dados = response.responseText.evalJSON();
+                        if (dados.success) {
+                            $('pagueveloz_pagueveloz_configuration_token').value = dados.result.Token;
+                            $('pagueveloz_pagueveloz_configuration_email').value = $('email').value;
+                            $('pagueveloz_pagueveloz_configuration_production').value = $('production').value;
+
+                            alert("Sua senha gerada: " + dados.result.Senha);
+                        } else {
+                            if (dados.result) {
+                                msg = "";
+                                for (var prop in dados.result) {
+                                    if (dados.result.hasOwnProperty(prop))
+                                        msg += "- " + dados.result[prop] + "\n";
+                                }
+                                alert(msg);
+                            }
+                            else {
+                                alert(dados.msg);
+                            }
+                        }
+                    },
+                    onFailure: function() {
+                        alert('Não foi possível completar a operação, tente novamente...');
+                    }
+                });
+            }
+    };
+</script>

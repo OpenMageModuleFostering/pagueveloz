@@ -1,0 +1,26 @@
+<?php
+$incrementId = $this->getOrderId();
+
+if ($incrementId) {
+	$order = Mage::getModel('sales/order')->loadByIncrementId($incrementId);
+
+	if ($order->getPayment()->getMethodInstance()->getCode() == PagueVeloz_Boleto_Model_BoletoMethod::PAYMENT_METHOD_BANKTRANSFER_CODE) {
+
+		try
+		{
+            $boleto = Mage::getModel('pagueveloz_boleto/boleto')->generate($order);
+
+            if ($boleto->getId()) {
+                echo "<a href=\"{$boleto->getUrl()}\" target=\"_blank\">Imprimir Boleto</a>";
+            }
+            else {
+                echo "<b>Não foi possível gerar o Boleto<br>"
+                    . "Favor contate o administrador do site</b>";
+            }
+		}
+		catch (Exception $e) {
+			echo $e->getMessage();
+		}
+	}
+}
+?>

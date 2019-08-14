@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <tabs>
+        <pagueveloz translate="label" module="pagueveloz_api">
+            <label>PagueVeloz</label>
+            <sort_order>100</sort_order>
+        </pagueveloz>
+    </tabs>
+    <sections>
+        <pagueveloz translate="label" module="pagueveloz_api">
+            <label>Configuração</label>
+            <tab>pagueveloz</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <pagueveloz_configuration translate="label">
+                    <label>Integração Pagueveloz</label>
+                    <sort_order>670</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <comment>
+                        <![CDATA[
+                            <div class="config-heading">
+                                <strong style="font-size:14px">Informações Importantes</strong><br /><br />
+                                <div>
+                                    <button style="height: 50px; margin-left: 50px;" onclick="pagueveloz.cadastrar()" class="scalable save" type="button" title="Salvar Configuração" id="id_78fc26f7eeebbd0b527349a17a37de66">
+                                        <span><span><span>Assinar PagueVeloz</span></span></span>
+                                    </button>
+                                </div>
+                                <div style="color: #fc862e;
+                                            font-size: xx-large;
+                                            font-weight: bold;
+                                            margin-bottom: 25px;
+                                            margin-left: 100px;
+                                            margin-top: 25px;">OU</div>
+                                Para criar seu token de produção faça o cadastro em 
+                                <a href="https://www.pagueveloz.com.br/Cliente" target="_blank">PagueVeloz</a>.<br />
+                                Para criar seu token para testes, em homologação, faça o cadastro em 
+                                <a href="http://pagueveloz.homolog.bludata.net/Cliente" target="_blank">PagueVeloz Homolog</a>.
+                                
+                            </div>
+                        ]]>
+                    </comment>
+                    <fields>
+                        <id translate="label">
+                            <label>Id</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>0</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </id>
+                        <active translate="label">
+                            <label>Habilitado</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <production translate="label">
+                            <label>Produção</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </production>
+                        <email translate="label">
+                            <label>E-mail</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>75</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Email de cadastro no PagueVeloz</comment>
+                        </email>
+                        <token translate="label">
+                            <label>Token</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>85</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Token gerado pela conta PagueVeloz</comment>
+                        </token>
+                    </fields>
+                </pagueveloz_configuration>
+                <pagueveloz_cliente translate="label">
+                    <label>Informações do Cliente</label>
+                    <sort_order>670</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <comment>
+                        <![CDATA[
+                            <div class="config-heading">
+                               Informe seus dados para atualizar informações no pagueveloz
+                            </div>
+                        ]]>
+                    </comment>
+                    <fields>
+                        <name translate="label">
+                            <label>Nome</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </name>
+                        <email translate="label">
+                            <label>E-mail</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>75</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </email>
+                        <send_boleto_pago translate="label">
+                            <label>Enviar por email boletos pagos</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </send_boleto_pago>
+                        <cidade translate="label">
+                            <label>Cidade</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </cidade>
+                        <estado translate="label">
+                            <label>Estado</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </estado>
+                        <logradouro translate="label">
+                            <label>Rua</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>350</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </logradouro>
+                        <numero translate="label">
+                            <label>Numero</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </numero>
+                        <cep translate="label">
+                            <label>Cep</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>450</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </cep>
+                    </fields>
+                </pagueveloz_cliente>
+            </groups>
+        </pagueveloz>
+    </sections>
+</config>

@@ -1,0 +1,83 @@
+<script type="text/javascript">
+    boleto = {
+        verificar: function(boleto_id) {
+            new Ajax.Request('<?php echo Mage::getUrl('adminhtml/boleto/verificar') ?>', {
+                method: 'post',
+                parameters: {
+                    boleto_id: boleto_id,
+                },
+                onSuccess: function(response) {
+                    var dados = response.responseText.evalJSON();
+                    if (!dados.success) {
+                        alert(dados.msg);
+                    } else {
+                        $('boleto-status').innerHTML = dados.pagamento.Status;
+                        $('valor-pago').innerHTML = dados.pagamento.Valor;
+                    }
+                },
+                onFailure: function() {
+                    alert('Não foi possível completar a operação, tente novamente...');
+                }
+            });
+        },
+        regerar: function(boleto_id) {
+            new Ajax.Request('<?php echo Mage::getUrl('adminhtml/boleto/regerar') ?>', {
+                method: 'post',
+                parameters: {
+                    boleto_id: boleto_id,
+                    order_id: <?php echo $this->getRequest()->getParam('order_id') ?>
+                },
+                onSuccess: function(response) {
+                    var dados = response.responseText.evalJSON();
+                    if (!dados.success) {
+                        alert(dados.msg);
+                    } else {
+                        $('url-boleto').innerHTML = dados.url;
+                    }
+                },
+                onFailure: function() {
+                    alert('Não foi possível completar a operação, tente novamente...');
+                }
+            });
+        }
+    };
+</script>
+<div style="" id="sales_order_view_tabs_order_history_content"><div class="entry-edit">
+    <fieldset>
+        <ul>
+            <?php $boleto = $this->getBoleto(); ?>
+            <li>
+            	<strong>Vencimento: </strong><?php $date = new DateTime($boleto->getDataVencimento());
+					echo $date->format('d/m/Y');  ?>
+            </li>
+            <li>
+            	<strong>Url: </strong><span id="url-boleto"><?php echo $boleto->getUrl() ?></span>
+                <button id="bt-regerar" title="Verificar" type="button" class="scalable add" onclick="boleto.regerar(<?php echo $boleto->getId() ?>)" style="">
+                    <span><span><span>Regerar Boleto</span></span></span>
+                </button>
+            </li>
+            <li>
+            	<strong>Valor: </strong><?php echo Mage::helper('core')->currency($boleto->getValor(), true, false) ?>
+            </li>
+            <li>
+            	<strong>Status: </strong><span id="boleto-status"><?php echo ($boleto->getStatus()) ? $boleto->getStatus() : "Não Pago" ?></span>
+            </li>
+            <li>
+                <?php $valorPago = ($boleto->getValorPago()) ? $boleto->getValorPago() : 0; ?>
+                <strong>Valor Pago: </strong><span id="valor-pago"><?php echo Mage::helper('core')->currency($valorPago, true, false)  ?></span>
+            </li>
+            <li>
+            	<strong>Verificado automaticamente em: </strong><?php
+				$date = new DateTime($boleto->getUpdatedTime());
+            	echo ($boleto->getUpdatedTime()) ? $date->format('d/m/Y') : "Não Verificado" ?>
+            </li>
+            <?php if (!$boleto->getStatus()): ?>
+            <li>
+                <button id="bt-verificar" title="Verificar" type="button" class="scalable add" onclick="boleto.verificar(<?php echo $boleto->getId() ?>)" style="">
+                    <span><span><span>Verificar Pagamento</span></span></span>
+                </button>
+            </li>
+            <?php endif; ?>
+        </ul>
+    </fieldset>
+</div>

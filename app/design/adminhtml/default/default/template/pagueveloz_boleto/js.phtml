@@ -1,0 +1,43 @@
+<script type="text/javascript">
+    conta = {
+        cadastrar: function(titulo, nome_titulo, vencimento, valor, codigo_barras) {
+            new Ajax.Request('<?php echo Mage::getUrl('adminhtml/conta/cadastrar') ?>', {
+                method: 'post',
+                parameters: {
+                    titulo: titulo,
+                    nome_titulo: nome_titulo,
+                    vencimento: vencimento,
+                    valor: valor,
+                    codigo_barras: codigo_barras
+                },
+                onSuccess: function(response) {
+                    var dados = response.responseText.evalJSON();
+                    if (dados.success) {
+                        alert(dados.result.Message);
+                    } else {
+                        if (dados.error) {
+                            for(var prop in dados.error) {
+                                if(dados.error.hasOwnProperty(prop))
+                                    alert(dados.error[prop]);
+                            }
+                        }
+                        else {
+                            alert(dados.msg);
+                        }
+                    }
+                },
+                onFailure: function() {
+                    alert('Não foi possível completar a operação, tente novamente...');
+                }
+            });
+        }
+    };
+
+    Calendar.setup({
+        inputField : 'vencimento',
+        ifFormat : '%Y-%m-%e',
+        button : 'vencimento_button',
+        align : 'Bl',
+        singleClick : true
+    });
+</script>
