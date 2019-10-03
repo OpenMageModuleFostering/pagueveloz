@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/pagueveloz",
+    "name": "OpenMageModuleFostering\/pagueveloz",
     "type": "magento-module",
     "license": "Open-Software-License-(OSL)",
     "homepage": "",
     "description": "PagueVeloz is a payment gateway, already prepared to generate and recognize brazilian payment method boleto.",
     "authors": [
-    {
-        "name": "Trezo",
-        "email": "contato@trezo.com.br"
-    }
-],
+        {
+            "name": "Trezo",
+            "email": "contato@trezo.com.br"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
